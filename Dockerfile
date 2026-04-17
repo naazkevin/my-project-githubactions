@@ -1,8 +1,12 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM node:18-alpine
 
-EXPOSE 8080
+WORKDIR /app
 
-COPY ./build/libs/my-app-1.0-SNAPSHOT.jar /usr/app/
-WORKDIR /usr/app
+COPY package*.json ./
+RUN npm install
 
-ENTRYPOINT ["java", "-jar", "my-app-1.0-SNAPSHOT.jar"]
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
